@@ -5,7 +5,6 @@ public class Automaton implements IStringMatcher {
 
 	@Override
 	public LinkedList<Integer> validShifts(String pattern, String text) {
-		//TODO
 		LinkedList<Integer> SS = new LinkedList<Integer>();
 		int [][] f = Compute_Transition_Function(pattern);
 		int n = text.length();

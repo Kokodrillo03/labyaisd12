@@ -7,10 +7,11 @@ public class KMP implements IStringMatcher {
 		LinkedList<Integer> SS = new LinkedList<Integer>();
 		int n = text.length();
 		int m = pattern.length();
+		if(m == 0 || n == 0) return null;
 		int [] f = Compute_Prefix_Function(pattern);
 		int q = 0;
 		for(int i = 0; i < n; i++){
-			while (q > 0 && pattern.charAt(q) != text.charAt(i)) q = f[q];
+			while (q > 0 && pattern.charAt(q) != text.charAt(i)) q = f[q-1];
 			if(pattern.charAt(q) == text.charAt(i)) q++;
 			if(q == m){
 				SS.add(i - m + 1);
@@ -23,15 +24,13 @@ public class KMP implements IStringMatcher {
 	private int [] Compute_Prefix_Function(String pattern){
 		int m = pattern.length();
 		int [] f = new int[m];
-		int k;
-		k = 0;
-
-		for(int i = 2; i <= m; i++){
-			while (k > 0 && pattern.charAt(k) != pattern.charAt(i-1)){
-				k = f[k];
+		int k = 0;
+		for(int q = 2; q <= m; q++){
+			while (k > 0 && pattern.charAt(k) != pattern.charAt(q-1)){
+				k = f[k-1];
 			}
-			if(pattern.charAt(k) == pattern.charAt(i-1)) k++;
-			f[i-1] = k;
+			if(pattern.charAt(k) == pattern.charAt(q-1)) k++;
+			f[q-1] = k;
 		}
 
 		return f;
